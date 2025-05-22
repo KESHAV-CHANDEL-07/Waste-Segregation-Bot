@@ -2,7 +2,7 @@ import cv2
 import math
 from ultralytics import YOLO
 
-# ==== CONFIGURATION ====
+#Config
 MODEL_PATH = r"C:\Users\kesha\test venv\runs\detect\train5\weights\best.pt"# Path to your custom YOLO model
 CAMERA_HEIGHT_M = 0.95             # Camera height from the ground (in meters)
 CAMERA_ANGLE_DEG = 30             # Downward tilt angle from horizontal
@@ -10,7 +10,7 @@ VERTICAL_FOV_DEG = 49.5            # Vertical Field of View of your camera (in d
 FRAME_WIDTH = 640
 FRAME_HEIGHT = 480
 
-# ==== FUNCTION TO ESTIMATE DISTANCE ====
+#FUNCTION TO ESTIMATE DISTANCE
 def estimate_distance(y_pixel):
     delta_angle_deg = ((y_pixel / FRAME_HEIGHT) - 0.5) * VERTICAL_FOV_DEG
     total_angle_deg = CAMERA_ANGLE_DEG + delta_angle_deg
@@ -22,10 +22,10 @@ def estimate_distance(y_pixel):
     distance = CAMERA_HEIGHT_M / math.tan(total_angle_rad)
     return distance
 
-# ==== LOAD CUSTOM YOLO MODEL ====
+#load your model
 model = YOLO(MODEL_PATH)
 
-# ==== INITIALIZE CAMERA ====
+# camera
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
@@ -35,15 +35,14 @@ while True:
     if not ret:
         break
 
-    # Run YOLO on the current frame
     results = model(frame, verbose=False)[0]
 
     for box in results.boxes:
         cls = int(box.cls[0])
-        label = model.names[cls]  # e.g., 'biodegradable', 'non-biodegradable'
+        label = model.names[cls]  
 
         x1, y1, x2, y2 = map(int, box.xyxy[0])
-        object_y = y2  # bottom-most pixel of the bounding box
+        object_y = y2 
 
         distance = estimate_distance(object_y)
         if distance:
