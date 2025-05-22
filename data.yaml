@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 4
+names: ['1', 'Waste segregatoion bot - v11 2025-04-05 3-52pm', 'biodegradable', 'non biodegradable']
+
+roboflow:
+  workspace: keshav-asi9b
+  project: waste-segregation-bot
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/keshav-asi9b/waste-segregation-bot/dataset/1
