@@ -9,7 +9,7 @@ GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 def button_callback(channel):
     print("Button pressed! Executing script...")
-    subprocess.run(["python3", "/home/pi/d4.py"])  # Update with your script's path
+    subprocess.run(["python3", "/home/pi/d4.py"])
 
 GPIO.add_event_detect(BUTTON_PIN, GPIO.RISING, callback=button_callback, bouncetime=300)
 
